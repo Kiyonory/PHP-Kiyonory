@@ -12,7 +12,7 @@
     </header>
     <main>
         <section>
-            <form action="https;//httpbin.org/post" method="post" style="display: flex; flex-direction: column;">
+            <form action="https://httpbin.org/post" method="post" style="display: flex; flex-direction: column;">
                 <h2>Форма</h2>
                 <label for="name">
                     Имя пользователя:
@@ -55,7 +55,6 @@
                         Email
                         <input type="checkbox" name="response" value="Email">
                     </label>
-
                 </fieldset>
                 <div>
                     <button type="submit">

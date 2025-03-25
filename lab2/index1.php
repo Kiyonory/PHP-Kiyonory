@@ -12,7 +12,7 @@
     </header>
     <main>
         <?php
-            $result = get_headers("https://httpbin.org/post")
+            $result = get_headers("https://httpbin.org/post");
             echo "<textarea>";
                 print_r($result);
             echo "</textarea>";
