@@ -11,9 +11,47 @@
         }
     }
 
+    function evaluate($expr) {
+        $expr = str_replace(' ', '', $expr);
+        return parseExpression($expr);
+    }
+    
+    function parseExpression($expr) {
+        while (strpos($expr, '(') !== false) {
+            $start = strrpos($expr, '(');
+            $end = strpos($expr, ')', $start);
+            if ($end === false) return "Ошибка: неверные скобки";
+    
+            $inner = substr($expr, $start + 1, $end - $start - 1);
+            $value = parseExpression($inner);
+            $expr = substr_replace($expr, $value, $start, $end - $start + 1);
+        }
+    
+        $pattern = '/(-?\d+(\.\d+)?)([\+\-])(\d+(\.\d+)?)/';
+        while (preg_match($pattern, $expr, $matches)) {
+            $left = $matches[1];
+            $op = $matches[3];
+            $right = $matches[4];
+            $result = ($op === '+') ? $left + $right : $left - $right;
+            $expr = preg_replace($pattern, $result, $expr, 1);
+        }
+        $pattern = '/(-?\d+(\.\d+)?)([\*\/])(-?\d+(\.\d+)?)/';
+        while (preg_match($pattern, $expr, $matches)) {
+            $left = $matches[1];
+            $op = $matches[3];
+            $right = $matches[4];
+            if ($op === '*' || $op === '/') {
+                if ($op === '/' && $right == 0) return "Ошибка: деление на 0";
+                $result = ($op === '*') ? $left * $right : $left / $right;
+                $expr = preg_replace($pattern, $result, $expr, 1);
+            }
+        }
+    
+        return is_numeric($expr) ? $expr : "Ошибка";
+    }
     if (isset($_POST['equal'])) {
         $allowed_chars = "0123456789+-*/().";
-
+    
         $is_valid = true;
         for ($i = 0; $i < strlen($num); $i++) {
             if (strpos($allowed_chars, $num[$i]) === false) {
@@ -21,17 +59,14 @@
                 break;
             }
         }
-
+    
         if (!$is_valid) {
             $num = "Ошибка";
         } else {
-            try {
-                $num = eval('return ' . $num . ';');
-            } catch (ParseError $e) {
-                $num = "Ошибка";
-            }
+            $num = evaluate($num);
         }
     }
+    
 
     if (isset($_POST['clear'])) {
         $num = "";
