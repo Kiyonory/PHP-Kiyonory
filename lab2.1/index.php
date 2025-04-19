@@ -33,6 +33,7 @@ echo "<br>";
 echo "<br>Задание 4<br>";
 $arr4 = ['a', 'b', 'c', 'd', 'e'];
 $result4 = array_map('strtoupper', $arr4);
+$result4 = implode(",", $result4);
 print_r($result4);
 echo "<br>";
 
