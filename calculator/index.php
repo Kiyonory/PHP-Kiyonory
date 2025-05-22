@@ -1,80 +1,58 @@
-<?php 
-    if (isset($_POST['num'])) {
-        $num = $_POST['input'] . $_POST['num'];
-    } else {
-        $num = isset($_POST['input']) ? $_POST['input'] : "";
-    }
+<?php
+function cot($x) {
+    return 1 / tan($x);
+}
 
-    if (isset($_POST['op'])) {
-        if (!empty($num)) {
-            $num = $num . $_POST['op'];
-        }
-    }
+function calculate($val) {
+    if (strlen($val) == 0) return 0;
 
-    function evaluate($expr) {
-        $expr = str_replace(' ', '', $expr);
-        return parseExpression($expr);
-    }
-    
-    function parseExpression($expr) {
-        while (strpos($expr, '(') !== false) {
-            $start = strrpos($expr, '(');
-            $end = strpos($expr, ')', $start);
-            if ($end === false) return "Ошибка: неверные скобки";
-    
-            $inner = substr($expr, $start + 1, $end - $start - 1);
-            $value = parseExpression($inner);
-            $expr = substr_replace($expr, $value, $start, $end - $start + 1);
-        }
-    
-        $pattern = '/(-?\d+(\.\d+)?)([\+\-])(\d+(\.\d+)?)/';
-        while (preg_match($pattern, $expr, $matches)) {
-            $left = $matches[1];
-            $op = $matches[3];
-            $right = $matches[4];
-            $result = ($op === '+') ? $left + $right : $left - $right;
-            $expr = preg_replace($pattern, $result, $expr, 1);
-        }
-        $pattern = '/(-?\d+(\.\d+)?)([\*\/])(-?\d+(\.\d+)?)/';
-        while (preg_match($pattern, $expr, $matches)) {
-            $left = $matches[1];
-            $op = $matches[3];
-            $right = $matches[4];
-            if ($op === '*' || $op === '/') {
-                if ($op === '/' && $right == 0) return "Ошибка: деление на 0";
-                $result = ($op === '*') ? $left * $right : $left / $right;
-                $expr = preg_replace($pattern, $result, $expr, 1);
-            }
-        }
-    
-        return is_numeric($expr) ? $expr : "Ошибка";
-    }
-    if (isset($_POST['equal'])) {
-        $allowed_chars = "0123456789+-*/().";
-    
-        $is_valid = true;
-        for ($i = 0; $i < strlen($num); $i++) {
-            if (strpos($allowed_chars, $num[$i]) === false) {
-                $is_valid = false;
+    $val = "0+" . $val;
+    $val = str_replace([' ', '--', '+-', '-+', '++'], ['', '+', '-', '-', '+'], $val);
+
+    while (preg_match('/([a-z]+)\((-?\d+\.?\d*)\)/i', $val, $matches)) {
+        $function = strtolower($matches[1]);
+        $degrees = (double) $matches[2];
+        $result = 0;
+
+        switch ($function) {
+            case 'sin':
+                $result = sin(deg2rad($degrees));
                 break;
-            }
+            case 'cos':
+                $result = cos(deg2rad($degrees));
+                break;
+            case 'tan':
+                $result = tan(deg2rad($degrees));
+                break;
+            case 'cot':
+                $result = cot(deg2rad($degrees));
+                break;
+            default:
+                return "Unknown function: $function";
         }
-    
-        if (!$is_valid) {
-            $num = "Ошибка";
-        } else {
-            $num = evaluate($num);
-        }
-    }
-    
 
-    if (isset($_POST['clear'])) {
-        $num = "";
+        $val = preg_replace('/' . preg_quote($matches[0], '/') . '/', $result, $val, 1);
     }
 
-    if (isset($_POST['delete'])) {
-        $num = substr($num, 0, -1);
+    while (preg_match('/(-?\d+\.?\d*)([\/\*])(-?\d+\.?\d*)/', $val, $matches)) {
+        $left = (double) $matches[1];
+        $operator = $matches[2];
+        $right = (double) $matches[3];
+        $newVal = $operator === '*' ? $left * $right : ($right === 0 ? "division by zero" : $left / $right);
+        if (is_string($newVal)) return $newVal;
+        $val = preg_replace('/' . preg_quote($matches[0], '/') . '/', $newVal, $val, 1);
     }
+
+    while (preg_match('/(-?\d+\.?\d*)([\+\-])(-?\d+\.?\d*)/', $val, $matches)) {
+        $left = (double) $matches[1];
+        $operator = $matches[2];
+        $right = (double) $matches[3];
+        $newVal = $operator === '+' ? $left + $right : $left - $right;
+        $val = preg_replace('/' . preg_quote($matches[0], '/') . '/', $newVal, $val, 1);
+    }
+
+    return $val;
+}
 ?>
 
 
