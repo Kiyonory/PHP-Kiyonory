@@ -41,7 +41,7 @@ function show_delete_interface() {
     $html .= '<nav class="menu"><ul class="user-list-menu">';
 
     if ($results_list) {
-        while ($row = $results_list->fetchArray(SQLite3_ASSOC)) {
+        while ($row = $results_list->fetchArray()) {
              $name = htmlspecialchars($row['last_name'] . ' ' . $row['first_name']);
              $html .= '<li><a href="index.php?action=delete&delete_id=' . $row['id'] . '">' . $name . '</a></li>';
         }

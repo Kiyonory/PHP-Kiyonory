@@ -138,7 +138,7 @@ function show_edit_form() {
         $html .= '<nav class="menu"><ul class="user-list-menu">';
 
         if ($results) {
-            while ($row = $results->fetchArray(SQLite3_ASSOC)) {
+            while ($row = $results->fetchArray()) {
                  $name = htmlspecialchars($row['last_name'] . ' ' . $row['first_name']);
                  $html .= '<li><a href="index.php?action=edit&id=' . $row['id'] . '">' . $name . '</a></li>';
             }

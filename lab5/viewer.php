@@ -10,10 +10,10 @@ function show_contacts_table($sort = 'date', $page = 1) {
 
     $order_by = '';
     switch ($sort) {
-        case 'surname':
+        case 'name':
             $order_by = 'ORDER BY last_name ASC, first_name ASC';
             break;
-        case 'birthdate':
+        case 'dob':
             $order_by = 'ORDER BY dob ASC';
             break;
         case 'date':
