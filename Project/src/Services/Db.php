@@ -33,7 +33,15 @@ class Db{
     {
         $sth = $this->connect->prepare($sql);
         $result = $sth->execute($params);
-        if ($result == false) return null;
-        return $sth->fetchAll(\PDO::FETCH_CLASS, $className);
+        
+        if ($result === false) {
+            return null;
+        }
+        if (stripos($sql, 'SELECT') === 0) {
+            return $sth->fetchAll(\PDO::FETCH_CLASS, $className);
+        }
+        
+            
+        return [];
     }
 }

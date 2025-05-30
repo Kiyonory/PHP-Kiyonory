@@ -22,7 +22,9 @@
 
     <div class="mt-3">
         <a href="<?=dirname($_SERVER['SCRIPT_NAME'])?>/article/<?=$article->getId();?>/edit" class="card-link">Обновить статью</a>
-        <a href="<?=dirname($_SERVER['SCRIPT_NAME'])?>/article/<?=$article->getId();?>/delete" class="card-link">Удалить статью</a>
+        <form action="<?=dirname($_SERVER['SCRIPT_NAME'])?>/article/<?=$article->getId();?>/delete" method="POST" style="display: inline;">
+            <button type="submit" style="background: none; border: none; color:#ff8c00; text-decoration: none; padding: 0; margin: 0; font: inherit; cursor: pointer;">Удалить статью</button>
+        </form>
     </div>
   </div>
 </div>
