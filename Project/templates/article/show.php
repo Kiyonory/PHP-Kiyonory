@@ -51,6 +51,15 @@
                     <input type="hidden" name="comment_id" value="<?= $comment->getId() ?>">
                     <button type="submit" class="delete-comment">Удалить</button>
                 </form>
+                <button class="edit-comment" data-comment-id="<?= $comment->getId() ?>">Редактировать</button>
+
+                <div class="edit-comment-form" style="display: none;">
+                    <form action="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/comment/<?= $comment->getId() ?>/update" method="POST">
+                        <textarea name="text"><?= htmlspecialchars($comment->getText()) ?></textarea>
+                        <button type="submit">Сохранить изменения</button>
+                        <button type="button" class="cancel-edit">Отмена</button>
+                    </form>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
@@ -65,5 +74,33 @@
 
 <script src="<?=dirname($_SERVER['SCRIPT_NAME'])?>/js/rating.js"></script>
 <script src="<?=dirname($_SERVER['SCRIPT_NAME'])?>/js/comments.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        document.querySelectorAll('.edit-comment').forEach(button => {
+            button.addEventListener('click', function() {
+                const commentElement = this.closest('.comment');
+                const commentText = commentElement.querySelector('.comment-text');
+                const editForm = commentElement.querySelector('.edit-comment-form');
+
+                commentText.style.display = 'none';
+                editForm.style.display = 'block';
+            });
+        });
+
+        
+        document.querySelectorAll('.cancel-edit').forEach(button => {
+            button.addEventListener('click', function() {
+                const commentElement = this.closest('.comment');
+                const commentText = commentElement.querySelector('.comment-text');
+                const editForm = commentElement.querySelector('.edit-comment-form');
+
+                commentText.style.display = 'block';
+                editForm.style.display = 'none';
+            });
+        });
+    });
+</script>
 
 <?php require(dirname(__DIR__).'/footer.html');?>

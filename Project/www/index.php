@@ -49,7 +49,6 @@ foreach($patterns as $pattern => $controllerAndAction){
             exit();
         }
 
-        // Проверка на POST запрос для соответствующих маршрутов
         $postRoutes = [
             '~^/article/store$~',
             '~^/article/(\d+)/update$~',

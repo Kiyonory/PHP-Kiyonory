@@ -11,4 +11,5 @@ return [
     '~^/article/rate$~' => [\src\Controllers\ArticleController::class, 'rate'],
     '~^/comment/store$~' => [\src\Controllers\CommentController::class, 'store'],
     '~^/comment/delete$~' => [\src\Controllers\CommentController::class, 'delete'],
+    '~^/comment/(\d+)/update$~' => [\src\Controllers\CommentController::class, 'update'],
 ]; 

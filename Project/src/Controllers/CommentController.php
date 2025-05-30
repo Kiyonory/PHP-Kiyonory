@@ -43,4 +43,26 @@ class CommentController
 
         return header('Location: ' . dirname($_SERVER['SCRIPT_NAME']) . '/article/' . $articleId);
     }
+
+    public function update(int $id)
+    {
+        if (empty($_POST['text'])) {
+           
+            return header('Location: ' . $_SERVER['HTTP_REFERER'] ?? dirname($_SERVER['SCRIPT_NAME']) . '/');
+        }
+
+        $comment = Comment::getById($id);
+        if (!$comment) {
+            
+             header('HTTP/1.1 404 Not Found');
+             echo 'Комментарий не найден';
+             exit();
+        }
+
+        $comment->text = $_POST['text'];
+        $comment->save();
+
+        
+        return header('Location: ' . dirname($_SERVER['SCRIPT_NAME']) . '/article/' . $comment->getArticleId());
+    }
 } 

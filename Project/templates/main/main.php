@@ -15,7 +15,7 @@
     <?php else: ?>
         <div class="row">
             <?php foreach ($articles as $article): ?>
-                <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;">
+                <div style="border: 5px solid #ccc; margin-bottom: 10px; padding: 10px;">
                     <h2><a href="<?=dirname($_SERVER['SCRIPT_NAME'])?>/article/<?=$article->getId()?>" style="text-decoration: none; color: inherit;"><?= htmlspecialchars($article->getTitle()) ?></a></h2>
                     <p>Дата: <?= date('Y-m-d H:i', strtotime($article->getCreatedAt())) ?> | Автор: <?= htmlspecialchars($article->getAuthorId()->getNickname()) ?></p>
                     

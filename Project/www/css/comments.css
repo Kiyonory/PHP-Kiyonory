@@ -19,7 +19,7 @@
 }
 
 .comment-form button {
-    background-color: var(--primary-orange) !important;
+    background-color: #6c757d !important;
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -28,7 +28,7 @@
 }
 
 .comment-form button:hover {
-    background-color: var(--secondary-orange) !important;
+    background-color: #5a6268 !important;
 }
 
 .comments-list {
@@ -65,7 +65,7 @@
 }
 
 .delete-comment {
-    background-color: var(--primary-orange);
+    background-color: #6c757d;
     color: white;
     border: none;
     padding: 0.25rem 0.5rem;
@@ -75,5 +75,41 @@
 }
 
 .delete-comment:hover {
-    background-color: var(--secondary-orange) !important;
+    background-color: #5a6268 !important;
+}
+
+.edit-comment-form {
+    margin-top: 1rem;
+}
+
+.edit-comment,
+.cancel-edit {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    margin-left: 0.5rem;
+}
+
+.edit-comment:hover,
+.cancel-edit:hover {
+    background-color: #5a6268 !important;
+}
+
+.edit-comment-form form button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    margin-right: 0.5rem;
+}
+
+.edit-comment-form form button:hover {
+    background-color: #5a6268 !important;
 } 
