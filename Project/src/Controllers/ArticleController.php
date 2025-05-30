@@ -7,15 +7,8 @@ use src\Models\Comments\Comment;
 use src\Models\Users\User;
 use src\Models\Articles\ArticleRating;
 
-class ArticleController
+class ArticleController extends AbstractController
 {
-    private $view;
-    private $db;
-    public function __construct()
-    {
-        $this->view = new View;  
-    }
-
     public function index(){
         $articles = Article::findAll();
         $this->view->renderHtml('article/index', ['articles'=>$articles]);

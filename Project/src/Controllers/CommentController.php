@@ -6,15 +6,8 @@ use src\View\View;
 use src\Models\Comments\Comment;
 use src\Models\Articles\Article;
 
-class CommentController
+class CommentController extends AbstractController
 {
-    private $view;
-    private $db;
-    
-    public function __construct() {
-        $this->view = new View;
-    }
-
     public function store()
     {
         $comment = new Comment;

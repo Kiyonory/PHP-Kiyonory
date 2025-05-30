@@ -4,13 +4,8 @@ namespace src\Controllers;
 use src\View\View;
 use src\Models\Articles\Article;
 
-class MainController{
-    private $view;
-    public function __construct()
-    {
-        $this->view = new View;   
-    }
-
+class MainController extends AbstractController
+{
     public function main(): void
     {
         $page = $_GET['page'] ?? 1; 
